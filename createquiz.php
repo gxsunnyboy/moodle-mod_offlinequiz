@@ -420,9 +420,16 @@ if ($mode == 'preview') {
                 $url = "$CFG->wwwroot/pluginfile.php/" . $questionfile->get_contextid() . '/' . $questionfile->get_component() .
                             '/' . $questionfile->get_filearea() . '/' . $questionfile->get_itemid() . '/' .
                             $questionfile->get_filename() . '?forcedownload=1';
-                echo $OUTPUT->action_link($url, $filestring);
-                echo '<br />&nbsp;<br />';
-                @flush();@ob_flush();
+  //              echo $OUTPUT->action_link($url, $filestring);
+//                echo '<br />&nbsp;<br />';
+//         modify the content of href in tag A  begin_from=====================
+              $linkString = $OUTPUT->action_link($url, $filestring);
+              $preg='/<a .*?id="(.*?)".*?>/is';
+              preg_match($preg,$linkString,$matches,PREG_OFFSET_CAPTURE);
+              echo html_writer::link($url,$filestring,array('id'=>$matches[1][0]));
+      //   modify the content of href in tag A  end_to=========================
+              echo '<br />&nbsp;<br />';
+              @flush();@ob_flush();
             } else {
                 echo $OUTPUT->notification(get_string('createpdferror', 'offlinequiz', $groupletter));
             }
@@ -461,8 +468,15 @@ if ($mode == 'preview') {
                 $url = "$CFG->wwwroot/pluginfile.php/" . $answerpdffile->get_contextid() . '/' .
                         $answerpdffile->get_component() . '/' . $answerpdffile->get_filearea() . '/' .
                         $answerpdffile->get_itemid() . '/' . $answerpdffile->get_filename() . '?forcedownload=1';
-                echo $OUTPUT->action_link($url, get_string('answerformforgroup', 'offlinequiz', $groupletter));
-                echo '<br />&nbsp;<br />';
+//                echo $OUTPUT->action_link($url, get_string('answerformforgroup', 'offlinequiz', $groupletter));
+//                echo '<br />&nbsp;<br />';
+//                modify the content of href in tag A  begin_from====================
+                   $linkString = $OUTPUT->action_link($url, get_string('answerformforgroup', 'offlinequiz', $groupletter));
+                   $preg='/<a .*?id="(.*?)".*?>/is';
+                   preg_match($preg,$linkString,$matches,PREG_OFFSET_CAPTURE);
+                   echo html_writer::link($url,get_string('answerformforgroup', 'offlinequiz', $groupletter),array('id'=>$matches[1][0]));
+                   echo '<br />&nbsp;<br />';
+ //                modify the content of href in tag A  end_to=================
                 @flush();@ob_flush();
             } else {
                 echo $OUTPUT->notification(get_string('createpdferror', 'offlinequiz', $groupletter));
@@ -501,11 +515,16 @@ if ($mode == 'preview') {
                 $url = "$CFG->wwwroot/pluginfile.php/" . $correctionpdffile->get_contextid() . '/' .
                         $correctionpdffile->get_component() . '/' . $correctionpdffile->get_filearea() . '/' .
                         $correctionpdffile->get_itemid() . '/' . $correctionpdffile->get_filename() . '?forcedownload=1';
-                echo $OUTPUT->action_link($url, get_string('formforcorrection', 'offlinequiz', $groupletter));
-
-                echo '<br />&nbsp;<br />';
-                @flush();@ob_flush();
-
+//                echo $OUTPUT->action_link($url, get_string('formforcorrection', 'offlinequiz', $groupletter));
+//                echo '<br />&nbsp;<br />';
+             //   modify the content of href in tag A  begin_from=====================
+                     $linkString = $OUTPUT->action_link($url, get_string('formforcorrection', 'offlinequiz', $groupletter));
+                     $preg='/<a .*?id="(.*?)".*?>/is';
+                     preg_match($preg,$linkString,$matches,PREG_OFFSET_CAPTURE);
+                     echo html_writer::link($url,get_string('formforcorrection', 'offlinequiz', $groupletter),array('id'=>$matches[1][0]));
+                     echo '<br />&nbsp;<br />';
+            //   modify the content of href in tag A  end_to=========================
+                     @flush();@ob_flush();
             } else {
                 echo $OUTPUT->notification(get_string('createpdferror', 'offlinequiz', $groupletter));
             }
