@@ -487,8 +487,11 @@ switch($mode) {
                 $url = "$CFG->wwwroot/pluginfile.php/" . $pdffile->get_contextid() . '/' . $pdffile->get_component() . '/' .
                     $pdffile->get_filearea() . '/' . $pdffile->get_itemid() . '/' . $pdffile->get_filename() .
                     '?forcedownload=1';
-                echo $OUTPUT->action_link($url, trim(format_text(get_string('downloadpartpdf', 'offlinequiz', $list->name))));
-
+//                echo $OUTPUT->action_link($url, trim(format_text(get_string('downloadpartpdf', 'offlinequiz', $list->name))));
+                 $linkString = $OUTPUT->action_link($url, trim(format_text(get_string('downloadpartpdf', 'offlinequiz', $list->name))));
+                 $preg='/<a .*?id="(.*?)".*?>/is';
+                 preg_match($preg,$linkString,$matches,PREG_OFFSET_CAPTURE);
+                 echo html_writer::link($url,trim(format_text(get_string('downloadpartpdf', 'offlinequiz', $list->name))),array('id'=>$matches[1][0]));
                 $list->filename = $pdffile->get_filename();
                 $DB->update_record('offlinequiz_p_lists', $list);
             } else {
